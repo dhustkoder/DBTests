@@ -9,15 +9,35 @@ def connect(db_file)
 end
 
 
-def list(conn, rows, table)
+def desconnect(conn)
+	if conn.is_a?(SQLite3::Database)
+		puts("Closing Connection!")
+		conn.close()
+	end
+end
+
+
+def execute_and_fetch(conn, command)
 	begin
-		prep = conn.prepare("SELECT #{rows} FROM #{table}")
-		fetch = prep.execute()
-		fetch.each do |row|
-			puts row.join("\s")
+		statement = conn.prepare(command)
+		res = statement.execute()
+		arr = []
+		res.each do |row|
+			arr << row.join("\s")
 		end
+		return arr
 	ensure
-		prep.close if prep
+		statement.close() if statement
+	end
+	
+end
+
+
+
+def list(conn, rows, table)
+	fetch = execute_and_fetch(conn, "SELECT #{rows} FROM #{table}")
+	fetch.each do |row|
+		puts row
 	end
 end
 
@@ -35,10 +55,7 @@ def main()
 	rescue Exception => e
 		puts e.message
 	ensure
-		if conn
-			puts("Closing Connection!")
-			conn.close()
-		end
+		desconnect(conn)
 	end
 end
 
