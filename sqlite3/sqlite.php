@@ -8,9 +8,10 @@
 		<?php
 			if ($db = new SQLite3("agend.db")) {
 				$result = $db->query("SELECT * FROM agend");
-				echo "<p>ID    NAME    PHONE</p>";
 				while($row = $result->fetchArray(SQLITE3_ASSOC)) {
-					echo "<p>{$row["id"]}   {$row["name"]}    {$row["phone"]}</p>";
+					echo "<h2>Name: {$row["name"]}</h2>";
+					echo "<p>ID: {$row["id"]}</p>";
+					echo "<p>Phone: {$row["phone"]}</p>";
 				}
 
 			} else {
