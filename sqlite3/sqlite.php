@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Page Title</title>
+		<title>SQLite Agend</title>
 	</head>
 	<body>
 		<h1>Listing Agend Table</h1>
